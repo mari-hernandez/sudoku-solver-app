@@ -11,18 +11,18 @@ function cellStyle(index, type){
     */
     if(index%3===2){
         if(type==='row'){
-        return {'border-bottom': '2px solid black'}
+        return {'borderBottom': '2px solid black'}
         }
         else{
-        return {'border-right': '2px solid black'}
+        return {'borderRight': '2px solid black'}
         }
     }
     else if(index===0){
         if(type==='row'){
-        return {'border-top': '2px solid black'}
+        return {'borderTop': '2px solid black'}
         }
         else{
-        return {'border-left': '2px solid black'}
+        return {'borderLeft': '2px solid black'}
         }
     }
     else{
@@ -64,7 +64,7 @@ const SudokuGrid = () => {
     setSudokuBoard(newSudokuBoard);
   }, [sudokuBoard]);
 
-
+  
   return (
     <div className="sudoku-container">
       <table className="table table-bordered sudoku-table">
