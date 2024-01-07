@@ -1,4 +1,5 @@
 import React, {useEffect, useState} from 'react'
+import SudokuGrid from './Components/SudokuGrid'
 
 function App() {
   const[backendData, setBackendData] = useState([])
@@ -9,14 +10,9 @@ function App() {
   }, [])
 
   return (
-    <div>
-      {(typeof backendData.users == 'undefined') ? (
-        <p> Loading...</p>
-      ):(
-        backendData.users.map((user, index) => (
-          <p key={index}> {user} </p>
-        )
-      ))}
+    <div style={{ textAlign: 'center' }}>
+      <h1>Sudoku</h1>
+      <SudokuGrid />
     </div>
   );
 }

@@ -1,0 +1,11 @@
+.sudoku-container {
+    padding: 10px; /* Ajusta según sea necesario para el espaciado alrededor del sudoku */
+    display: flex;
+    justify-content: center;
+  }
+  
+  .sudoku-table {
+    border-spacing: 0;
+    width: 360px; /* Ajusta según sea necesario para el ancho deseado del sudoku */
+    height: 360px; /* Mantiene el mismo valor que el ancho para garantizar que sea un cuadrado */
+  }
