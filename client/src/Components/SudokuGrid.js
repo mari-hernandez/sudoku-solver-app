@@ -43,6 +43,19 @@ const SudokuGrid = () => {
     [null, null, 2, null, 1, null, null, null, null],
     [null, null, null, null, 4, null, null, null, 9],
   ];
+
+  const solvedSudokuBoard = [
+    [9, 8, 7, 6, 5, 4, 3, 2, 1],
+    [2, 4, 6, 1, 7, 3, 9, 8, 5],
+    [3, 5, 1, 9, 2, 8, 7, 4, 6],
+    [1, 2, 8, 5, 3, 7, 6, 9, 4],
+    [6, 3, 4, 8, 9, 2, 1, 5, 7],
+    [7, 9, 5, 4, 6, 1, 8, 3, 2],
+    [5, 1, 9, 2, 8, 6, 4, 7, 3],
+    [4, 7, 2, 3, 1, 9, 5, 6, 8],
+    [8, 6, 3, 7, 4, 5, 2, 1, 9],
+  ];
+  
   const [sudokuBoard, setSudokuBoard] = useState(initialSudokuBoard);
 
   const handleSudokuBoardChange = useCallback((rowIndex, colIndex, value) => {
@@ -62,7 +75,7 @@ const SudokuGrid = () => {
                 <td
                   key={cellIndex} style={cellStyle(cellIndex, 'col')}
                 >
-                  {cell? cell: <SudokuInput handleSudokuBoardChange={handleSudokuBoardChange} rowIndex={rowIndex} cellIndex={cellIndex} />}
+                  {cell? cell: <SudokuInput handleSudokuBoardChange={handleSudokuBoardChange} rowIndex={rowIndex} cellIndex={cellIndex} correctValue={solvedSudokuBoard[rowIndex][cellIndex]} />}
                 </td>
               ))}
             </tr>

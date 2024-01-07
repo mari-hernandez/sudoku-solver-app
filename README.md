@@ -27,6 +27,7 @@ git clone https://github.com/your-username/sudoku-project.git
 
 ```bash
 cd server
+npm i nodemon -D
 npm run start
 ```
 
@@ -34,6 +35,7 @@ npm run start
 
 ```bash
 cd client
+npm install
 npm start
 ```
 

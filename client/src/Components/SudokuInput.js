@@ -7,13 +7,21 @@ const SudokuInput = ({handleSudokuBoardChange, rowIndex, cellIndex, correctValue
       };
     
     const handleInputChange = (e) => {
+        e.target.style.color = 'black';
         const inputValue = e.target.value;
         
         // Validate input value, only allow numbers between 1 and 9
-        if (!/^[1-9]$/.test(inputValue) && inputValue !== '') {
+        if (!/^[1-9]$/.test(inputValue) || inputValue === '') {
             e.target.value = '';
-        }else{handleSudokuBoardChange(rowIndex, cellIndex, inputValue);}
-        
+        }
+        // If input values is incorrect, change color to red
+        else if(parseInt(inputValue) !== correctValue){
+            e.target.style.color = 'red';
+        }
+        // If value is correct, handle change
+        else{
+            handleSudokuBoardChange(rowIndex, cellIndex, inputValue);
+        }
     };
 
     return (
