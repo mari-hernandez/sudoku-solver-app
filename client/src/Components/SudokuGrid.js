@@ -1,8 +1,9 @@
-import React, { useCallback } from 'react';
-import { useState } from 'react';
+import React, { useCallback, useMemo } from 'react';
+import { useState} from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './SudokuGrid.css'; // Asegúrate de crear este archivo CSS
 import SudokuInput from './SudokuInput';
+import Confetti from './Confetti';
 
 function cellStyle(index, type){
     /*
@@ -33,19 +34,7 @@ function cellStyle(index, type){
 const SudokuGrid = () => {
   // Grid is square of 9x9 array of numbers and nulls
   const initialSudokuBoard = [
-    [null, null, null, null, null, null, null, null, null],
-    [null, null, null, null, null, 3, null, 8, 5],
-    [null, null, 1, null, 2, null, null, null, null],
-    [null, null, null, 5, null, 7, null, null, null],
-    [null, null, 4, null, null, null, 1, null, null],
-    [null, 9, null, null, null, null, null, null, null],
-    [5, null, null, null, null, null, null, 7, 3],
-    [null, null, 2, null, 1, null, null, null, null],
-    [null, null, null, null, 4, null, null, null, 9],
-  ];
-
-  const solvedSudokuBoard = [
-    [9, 8, 7, 6, 5, 4, 3, 2, 1],
+    [null, 8, 7, 6, 5, 4, 3, 2, 1],
     [2, 4, 6, 1, 7, 3, 9, 8, 5],
     [3, 5, 1, 9, 2, 8, 7, 4, 6],
     [1, 2, 8, 5, 3, 7, 6, 9, 4],
@@ -55,17 +44,47 @@ const SudokuGrid = () => {
     [4, 7, 2, 3, 1, 9, 5, 6, 8],
     [8, 6, 3, 7, 4, 5, 2, 1, 9],
   ];
-  
+
+  const solvedSudokuBoard = useMemo(() => [
+    [9, 8, 7, 6, 5, 4, 3, 2, 1],
+    [2, 4, 6, 1, 7, 3, 9, 8, 5],
+    [3, 5, 1, 9, 2, 8, 7, 4, 6],
+    [1, 2, 8, 5, 3, 7, 6, 9, 4],
+    [6, 3, 4, 8, 9, 2, 1, 5, 7],
+    [7, 9, 5, 4, 6, 1, 8, 3, 2],
+    [5, 1, 9, 2, 8, 6, 4, 7, 3],
+    [4, 7, 2, 3, 1, 9, 5, 6, 8],
+    [8, 6, 3, 7, 4, 5, 2, 1, 9],
+], []);
+
+    
   const [sudokuBoard, setSudokuBoard] = useState(initialSudokuBoard);
+  const [isSudokuBoardSolved, setIsSudokuBoardSolved] = useState(false);
+
+  const isSudokuBoardCorrect= useCallback(() => {
+    for (let i = 0; i < 9; i++) {
+      for (let j = 0; j < 9; j++) {
+        if (parseInt(sudokuBoard[i][j]) !== parseInt(solvedSudokuBoard[i][j])) {
+          console.log('Incorrect value at row ' + i + ' and column ' + j);
+          return;
+        }
+      }
+    }
+    setIsSudokuBoardSolved(true);
+  },[sudokuBoard, solvedSudokuBoard, setIsSudokuBoardSolved]);
 
   const handleSudokuBoardChange = useCallback((rowIndex, colIndex, value) => {
     const newSudokuBoard = [...sudokuBoard];
     newSudokuBoard[rowIndex][colIndex] = value;
     setSudokuBoard(newSudokuBoard);
-  }, [sudokuBoard]);
 
-  
+    isSudokuBoardCorrect();
+  }, [sudokuBoard, isSudokuBoardCorrect]);
+
   return (
+    <>
+    { isSudokuBoardSolved &&
+      <Confetti />}
     <div className="sudoku-container">
       <table className="table table-bordered sudoku-table">
         <tbody>
@@ -83,6 +102,7 @@ const SudokuGrid = () => {
         </tbody>
       </table>
     </div>
+    </>       
   );
   
 };
