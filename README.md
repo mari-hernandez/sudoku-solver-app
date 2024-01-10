@@ -14,6 +14,8 @@ This project features a Sudoku application that consists of two main components:
 - The application includes an automated Sudoku solver capable of accepting an initial Sudoku board at any point.
 - Users can provide the solver with a partially filled Sudoku board, and it will complete the solution step by step, demonstrating the logical reasoning behind each move.
 
+The boards are sourced from [Dosuku](https://sudoku-api.vercel.app/).
+
 ## Instructions:
 To run the Sudoku application, follow these steps:
 

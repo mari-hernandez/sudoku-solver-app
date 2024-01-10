@@ -1,4 +1,4 @@
-import React, { useCallback, useMemo } from 'react';
+import React, { useCallback, useEffect } from 'react';
 import { useState} from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './SudokuGrid.css'; // Asegúrate de crear este archivo CSS
@@ -31,47 +31,25 @@ function cellStyle(index, type){
     }
 }
 
-const SudokuGrid = () => {
-  // Grid is square of 9x9 array of numbers and nulls
-  const initialSudokuBoard = [
-    [null, 8, 7, 6, 5, 4, 3, 2, 1],
-    [2, 4, 6, 1, 7, 3, 9, 8, 5],
-    [3, 5, 1, 9, 2, 8, 7, 4, 6],
-    [1, 2, 8, 5, 3, 7, 6, 9, 4],
-    [6, 3, 4, 8, 9, 2, 1, 5, 7],
-    [7, 9, 5, 4, 6, 1, 8, 3, 2],
-    [5, 1, 9, 2, 8, 6, 4, 7, 3],
-    [4, 7, 2, 3, 1, 9, 5, 6, 8],
-    [8, 6, 3, 7, 4, 5, 2, 1, 9],
-  ];
-
-  const solvedSudokuBoard = useMemo(() => [
-    [9, 8, 7, 6, 5, 4, 3, 2, 1],
-    [2, 4, 6, 1, 7, 3, 9, 8, 5],
-    [3, 5, 1, 9, 2, 8, 7, 4, 6],
-    [1, 2, 8, 5, 3, 7, 6, 9, 4],
-    [6, 3, 4, 8, 9, 2, 1, 5, 7],
-    [7, 9, 5, 4, 6, 1, 8, 3, 2],
-    [5, 1, 9, 2, 8, 6, 4, 7, 3],
-    [4, 7, 2, 3, 1, 9, 5, 6, 8],
-    [8, 6, 3, 7, 4, 5, 2, 1, 9],
-], []);
-
-    
-  const [sudokuBoard, setSudokuBoard] = useState(initialSudokuBoard);
+const SudokuGrid = ({board, solution}) => {
+  const [sudokuBoard, setSudokuBoard] = useState([]);
   const [isSudokuBoardSolved, setIsSudokuBoardSolved] = useState(false);
+
+  useEffect(() => {
+    setSudokuBoard(board);
+  }, [board]);
 
   const isSudokuBoardCorrect= useCallback(() => {
     for (let i = 0; i < 9; i++) {
       for (let j = 0; j < 9; j++) {
-        if (parseInt(sudokuBoard[i][j]) !== parseInt(solvedSudokuBoard[i][j])) {
+        if (parseInt(sudokuBoard[i][j]) !== parseInt(solution[i][j])) {
           console.log('Incorrect value at row ' + i + ' and column ' + j);
           return;
         }
       }
     }
     setIsSudokuBoardSolved(true);
-  },[sudokuBoard, solvedSudokuBoard, setIsSudokuBoardSolved]);
+  },[sudokuBoard, solution, setIsSudokuBoardSolved]);
 
   const handleSudokuBoardChange = useCallback((rowIndex, colIndex, value) => {
     const newSudokuBoard = [...sudokuBoard];
@@ -94,7 +72,7 @@ const SudokuGrid = () => {
                 <td
                   key={cellIndex} style={cellStyle(cellIndex, 'col')}
                 >
-                  {cell? cell: <SudokuInput handleSudokuBoardChange={handleSudokuBoardChange} rowIndex={rowIndex} cellIndex={cellIndex} correctValue={solvedSudokuBoard[rowIndex][cellIndex]} />}
+                  {cell? cell: <SudokuInput handleSudokuBoardChange={handleSudokuBoardChange} rowIndex={rowIndex} cellIndex={cellIndex} correctValue={solution[rowIndex][cellIndex]} />}
                 </td>
               ))}
             </tr>
